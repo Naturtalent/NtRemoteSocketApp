@@ -8,6 +8,8 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.List;
 
@@ -15,22 +17,26 @@ import it.naturtalent.databinding.RemoteData;
 
 /*
     Liste aller definierten Schalter in einem ListFragmetn anzeigen
+    Definition des Fragments durch Erweiterung einer Unterklasse (Listfragment) von Fragment
  */
-public class SecondFragment extends ListFragment
+public class SocketListFragment extends ListFragment
 {
-
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+
+        /*
+        String[] values = new String[]{"Android", "iPhone", "WindowsMobile",
                 "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2" };
+                "Linux", "OS/2"};
+
+         */
 
         Context context = getView().getContext();
 
         // Adapter fuer das ListFragment erzeugen
         //SocketAdapter adapter = new SocketAdapter(context);
-
 
         // Die gespeicherten Socketdaten laden
         RemoteDataUtils remoteDataUtils = new RemoteDataUtils(context);
@@ -51,7 +57,6 @@ public class SecondFragment extends ListFragment
          */
 
 
-
     }
 
     @Override
@@ -63,11 +68,36 @@ public class SecondFragment extends ListFragment
 
         RemoteData remoteData = (RemoteData) getRemoteDataList.get(position);
 
-        if(remoteData != null)
+        if (remoteData != null)
         {
-            Log.d("Select", "Position: "+ position);
+            Log.d("Select", "Position: " + position);
             String name = remoteData.getName();
             String type = remoteData.getType();
+
+            NavController navController =  NavHostFragment.findNavController(SocketListFragment.this);
+            navController.navigate(R.id.action_FirstFragment_to_SecondFragment);
+            //navController.navigate(R.id.action_SecondFragment_to_FirstFragment);
+
+            Log.d("Navigator", "Nav:" + navController);
+
+            /*
+            NavHostFragment.findNavController(SocketListFragment.this)
+                    .navigate(R.id.action_FirstFragment_to_SecondFragment);
+
+             */
+
+            /*
+            v.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    NavHostFragment.findNavController(SocketListFragment.this)
+                            .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                }
+            });
+
+             */
         }
     }
 
@@ -101,7 +131,6 @@ public class SecondFragment extends ListFragment
 
 
      */
-
 
 
 }

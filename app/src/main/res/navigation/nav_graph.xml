@@ -14,7 +14,10 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+
     </fragment>
+
+
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.ntremotesocketapp.SecondFragment"
@@ -22,7 +25,14 @@
         tools:layout="@layout/fragment_second">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_SecondFragment_to_recyclerViewFragment"
+            app:destination="@id/recyclerViewFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/recyclerViewFragment"
+        android:name="com.example.ntremotesocketapp.RecyclerViewFragment"
+        android:label="RecyclerViewFragment" />
+
+
 </navigation>

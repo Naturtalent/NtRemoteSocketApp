@@ -9,9 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.ListFragment;
-
 import java.util.List;
 
 import it.naturtalent.databinding.RemoteData;
@@ -49,6 +46,7 @@ public class SocketAdapter extends ArrayAdapter<String>
     {
         super(context, R.layout.rowlayout, (String[]) values);
         this.context = context;
+
     }
 
     public void setRemoteDataList(List<RemoteData> remoteDataList)
@@ -76,10 +74,7 @@ public class SocketAdapter extends ArrayAdapter<String>
                 RemoteData remoteData = remoteDataList.get(position);
                 textView.setText(remoteData.getName());
 
-
-
                 ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-
 
             Log.d("check", "get view");
 
