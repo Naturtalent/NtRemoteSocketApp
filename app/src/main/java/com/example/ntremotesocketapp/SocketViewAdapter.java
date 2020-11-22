@@ -23,7 +23,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.naturtalent.common.logger.Log;
+import it.naturtalent.databinding.RemoteData;
 
 /**
  * Provide views to RecyclerView with data from mDataSet.
@@ -61,10 +65,19 @@ public class SocketViewAdapter extends RecyclerView.Adapter<SocketViewAdapter.Vi
     /**
      * Initialize the dataset of the Adapter.
      *
-     * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public SocketViewAdapter(String[] dataSet) {
-        mDataSet = dataSet;
+    public SocketViewAdapter(List<RemoteData> remoteData)
+    {
+        mDataSet = null;
+
+        List<String>listSocketNames = new ArrayList<>();
+        if((remoteData != null) && (!remoteData.isEmpty()))
+        {
+            for(RemoteData remote : remoteData)
+                listSocketNames.add(remote.getName());
+        }
+
+        mDataSet = listSocketNames.toArray(new String[listSocketNames.size()]);
     }
 
     // BEGIN_INCLUDE(recyclerViewOnCreateViewHolder)

@@ -1,16 +1,24 @@
 package com.example.ntremotesocketapp;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.ListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import it.naturtalent.common.threadpool.FetchDataUseCase;
+import it.naturtalent.common.threadpool.ThreadPool;
 import it.naturtalent.databinding.RemoteData;
 
 public class RemoteDataUtils
@@ -23,6 +31,32 @@ public class RemoteDataUtils
     private ProgressDialog mProgressBar;
 
     private Fragment fragment;
+
+    // ThreadPool Parameter
+    private static FetchDataUseCase mFetchDataUseCase;
+    private InitializeDialogFragment dialogFragment;
+    private FetchDataUseCase.Listener threadPoolListerner;
+
+    // Listener dienst dazau den Dialog auszuschalten
+    private FetchDataUseCase.Listener ctrlDialogListener = new FetchDataUseCase.Listener()
+    {
+        @Override
+        public void onDataFetched(List<RemoteData> data)
+        {
+            dialogFragment.dismiss();
+        }
+
+        @Override
+        public void onDataFetchFailed()
+        {
+            dialogFragment.dismiss();
+        }
+    };
+
+
+    // die gespeicherten Daten
+    private static List<RemoteData> socketData;
+
 
     /*
     public RemoteDataUtils(Context context, SocketAdapter socketAdapter)
@@ -50,6 +84,91 @@ public class RemoteDataUtils
     {
         this.fragment = fragment;
     }
+
+    /*************************************************************************
+
+     ThreadPool Variante
+     Laden der Daten in einer Multiprozess Variante
+
+     *************************************************************************/
+
+    /*
+        Konstruktion
+     */
+    public RemoteDataUtils(Fragment fragment, FetchDataUseCase.Listener threadPoolListerner)
+    {
+        this.fragment = fragment;
+        this.threadPoolListerner = threadPoolListerner;
+    }
+
+    public static class InitializeDialogFragment extends DialogFragment
+    {
+
+        public static InitializeDialogFragment newInstance(int title)
+        {
+            InitializeDialogFragment frag = new InitializeDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("title", title);
+            frag.setArguments(args);
+            return frag;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState)
+        {
+            int title = getArguments().getInt("title");
+
+            return new AlertDialog.Builder(getActivity())
+                    .setIcon(R.drawable.alert_dialog_dart_icon)
+                    .setTitle(title)
+                    .setCancelable(true)
+                    .setNegativeButton(R.string.alert_dialog_cancel,
+                            new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog,
+                                                    int whichButton)
+                                {
+                                    it.naturtalent.common.logger.Log.i("FragmentAlertDialog", "Negative click!");
+                                    //dialog.dismiss();
+                                }
+                            })
+                    .create();
+        }
+    }
+
+
+
+
+    /*
+        Laden der gespeicherten Daten mit dem ThradPool Tool
+
+     */
+    public List<RemoteData> getSocketData()
+    {
+        if(socketData == null)
+        {
+            mFetchDataUseCase = new ThreadPool().getFetchDataUseCase();
+            mFetchDataUseCase.registerListener(ctrlDialogListener);
+            mFetchDataUseCase.registerListener(threadPoolListerner);
+            mFetchDataUseCase.fetchData();
+            showDialog();
+        }
+
+        return socketData;
+    }
+
+    private void showDialog()
+    {
+        dialogFragment = InitializeDialogFragment.newInstance(R.string.alert_dialog_two_buttons_title);
+        dialogFragment.show(fragment.getActivity().getSupportFragmentManager(), "dialog");
+    }
+
+
+    /*************************************************************************
+
+     alte Variante
+
+     *************************************************************************/
 
     public void setListFragment(ListFragment listFragment)
     {

@@ -55,21 +55,18 @@ public class SocketViewFragment extends Fragment
     protected RecyclerView.LayoutManager mLayoutManager;
     protected String[] mDataset;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        
         // Die gespeicherten Socketdaten laden
-        RemoteDataUtils remoteDataUtils = new RemoteDataUtils(context);
-        remoteDataUtils.setListFragment(this);
-
-
-
+        RemoteDataUtils remoteDataUtils = new RemoteDataUtils(this);
+        //remoteDataUtils.setListFragment(this);
 
         // Initialize dataset, this data would usually come from a local content provider or
         // remote server.
-        initDataset();
+        //initDataset();
     }
 
     @Override

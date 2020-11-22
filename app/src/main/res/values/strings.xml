@@ -12,4 +12,9 @@
 
     <string name="grid_layout_manager">Grid Layout Manager</string>
     <string name="linear_layout_manager">Linear Layout Manager</string>
+
+    <string name="alert_dialog_two_buttons_title">Vox clamantis in deserto</string>
+    <string name="alert_dialog_ok">OK</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+
 </resources>

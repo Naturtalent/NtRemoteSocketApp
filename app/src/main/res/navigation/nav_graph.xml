@@ -17,22 +17,22 @@
 
     </fragment>
 
-
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.ntremotesocketapp.SecondFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_second"/>
 
-        <action
-            android:id="@+id/action_SecondFragment_to_recyclerViewFragment"
-            app:destination="@id/recyclerViewFragment" />
-    </fragment>
-
+    <!--
     <fragment
         android:id="@+id/recyclerViewFragment"
         android:name="com.example.ntremotesocketapp.RecyclerViewFragment"
-        android:label="RecyclerViewFragment" />
+        android:label="RecyclerViewFragment" >
+        <action
+            android:id="@+id/action_recyclerViewFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+    </fragment>
+    -->
 
 
 </navigation>

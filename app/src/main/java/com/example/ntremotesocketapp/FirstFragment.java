@@ -20,7 +20,7 @@ public class FirstFragment extends Fragment
             Bundle savedInstanceState
     )
     {
-        // Inflate the layout for this fragment
+        // das Layout des 'FirstFragment' kommt aus der XML-Datei 'fragment_first.xml'
         return inflater.inflate(R.layout.fragment_first, container, false);
     }
 
