@@ -131,8 +131,27 @@ public class SecondFragment extends Fragment implements FetchDataUseCase.Listene
 
         android.util.Log.d("ThreadPoster", "Load Data OK data: " + data.get(0).getName());
 
-
+        // Adapter und Listener erzeugen
         SocketViewAdapter mAdapter = new SocketViewAdapter(socketData);
+        mAdapter.setClickInterface(new SocketViewAdapter.ClickInterface()
+        {
+            @Override
+            public void clickEventOne(Object obj)
+            {
+                RemoteData socket = (RemoteData) obj;
+                android.util.Log.d("SecondFragment", "Click Icon"+socket.getName());
+            }
+
+            @Override
+            public void clickEventTwo(Object obj1, Object obj2)
+            {
+                //android.util.Log.d("SecondFragment", "Click Socket: "+((RemoteData)obj2).getName());
+                RemoteData socket = (RemoteData) obj1;
+                android.util.Log.d("SecondFragment", "Socket: "+socket.getName());
+            }
+        });
+
+        // Adapter dem View hinzufuegen
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         mRecyclerView.setAdapter(mAdapter);
 

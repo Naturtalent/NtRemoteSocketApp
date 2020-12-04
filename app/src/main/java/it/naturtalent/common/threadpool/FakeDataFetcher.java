@@ -60,11 +60,23 @@ public class FakeDataFetcher {
     {
         List<RemoteData>remoteDateList = new ArrayList<>();
 
+
+        /*
         RemoteData socket = new RemoteData("Schalter1", "type", "Code", "RemoteCode");
         remoteDateList.add(socket);
 
         socket = new RemoteData("Schalter2", "type", "Code", "RemoteCode");
         remoteDateList.add(socket);
+
+         */
+
+        int n = 20;
+        for(int i = 1; i < n;i++)
+        {
+            RemoteData socket = new RemoteData("Schalter"+i, "type", "Code", "RemoteCode");
+            remoteDateList.add(socket);
+        }
+
 
         return remoteDateList;
     }

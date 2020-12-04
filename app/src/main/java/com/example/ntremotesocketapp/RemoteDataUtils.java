@@ -104,6 +104,9 @@ public class RemoteDataUtils
     public static class InitializeDialogFragment extends DialogFragment
     {
 
+        /*
+            Den Lade-Dialog instanziierren
+         */
         public static InitializeDialogFragment newInstance(int title)
         {
             InitializeDialogFragment frag = new InitializeDialogFragment();
@@ -112,6 +115,7 @@ public class RemoteDataUtils
             frag.setArguments(args);
             return frag;
         }
+
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -134,6 +138,8 @@ public class RemoteDataUtils
                             })
                     .create();
         }
+
+
     }
 
 
@@ -251,11 +257,21 @@ public class RemoteDataUtils
     {
         List<RemoteData>remoteDateList = new ArrayList<>();
 
+        /*
         RemoteData socket = new RemoteData("Schalter1", "type", "Code", "RemoteCode");
         remoteDateList.add(socket);
 
         socket = new RemoteData("Schalter2", "type", "Code", "RemoteCode");
         remoteDateList.add(socket);
+        */
+
+
+        int n = 20;
+        for(int i = 1; i < n;i++)
+        {
+            RemoteData socket = new RemoteData("Schalter"+i, "type", "Code", "RemoteCode");
+            remoteDateList.add(socket);
+        }
 
         return remoteDateList;
     }
